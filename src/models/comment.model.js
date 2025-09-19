@@ -23,3 +23,5 @@ const commentSchema = new Schema({
         type: Date
     }
 })
+
+export const CommentModel = model("comment", commentSchema);
