@@ -3,7 +3,7 @@ import { ArticleModel } from "../models/article.model.js";
 
 export const getAllArticles = async (req,res) => {
     try {
-        const articles = await ArticleModel.find();
+        const articles = await ArticleModel.find().populate("user tag");
 
         res.status(200).json(articles);
 
@@ -17,7 +17,7 @@ export const getAllArticles = async (req,res) => {
 
 export const getArticleById = async (req,res) => {
     try {
-        const article = await ArticleModel.findById(req.params.id);
+        const article = await ArticleModel.findById(req.params.id).populate("user tag comment");
 
         res.status(200).json(article);
 
@@ -81,7 +81,7 @@ export const updateArticle= async (req,res) => {
     }
 };
 
-export const deleteArticle= async (req,res) => {
+export const deleteArticle = async (req,res) => {
     try {
         await ArticleModel.findByIdAndDelete(req.params.id);
 

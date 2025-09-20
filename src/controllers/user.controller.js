@@ -2,7 +2,7 @@ import { UserModel } from "../models/user.model.js";
 
 export const getAllUsers = async (req,res) => {
     try {
-        const users = await UserModel.find();
+        const users = await UserModel.find().populate("article");
 
         res.status(200).json(users);
 
@@ -16,7 +16,7 @@ export const getAllUsers = async (req,res) => {
 
 export const getUserById = async (req,res) => {
     try {
-        const user = await UserModel.findById(req.params.id);
+        const user = await UserModel.findById(req.params.id).populate("article comment");
 
         res.status(200).json(user);
 

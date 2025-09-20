@@ -42,3 +42,9 @@ const articleSchema = new Schema({
 });
 
 export const ArticleModel = model("article", articleSchema);
+
+articleSchema.virtual("comment", {
+    ref: "comment",
+    localField: "_id",
+    foreignField: "article"
+});

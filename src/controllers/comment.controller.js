@@ -1,3 +1,4 @@
+import { ArticleModel } from "../models/article.model.js";
 import { CommentModel } from "../models/comment.model.js";
 
 
@@ -15,11 +16,11 @@ export const getAllComments = async (req,res) => {
     }
 };
 
-export const getCommentById = async (req,res) => {
+export const getCommentsAricle = async (req,res) => {
     try {
-        const comment = await CommentModel.findById(req.params.id);
+        const article = await ArticleModel.findById(req.params.id).populate("comment user");
 
-        res.status(200).json(comment);
+        res.status(200).json(article);
 
     } catch (error) {
         res.status(500).json({

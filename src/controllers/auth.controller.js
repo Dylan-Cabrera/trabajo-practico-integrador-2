@@ -57,9 +57,11 @@ export const logout  = async (req,res) => {
     }
 };
 
-export const profile  = async (req,res) => {
+export const getProfile  = async (req,res) => {
     try {
-        
+        const user = await UserModel.findOne({_id: req.user.id});
+
+        res.status(200).json(user.profile)
     } catch (error) {
         res.status(500).json({
             msg: "Error interno del servidor"
@@ -67,3 +69,22 @@ export const profile  = async (req,res) => {
         console.log(error);
     }
 };
+
+// export const updateProfile  = async (req,res) => {
+//     const {profile} = req.body
+//     try {
+//         const user = UserModel.updateOne(
+//             {_id: req.user.id},
+//             {profile: profile});
+
+//         res.status(200).json({
+//             msg: "Perfil actualizado con exito"
+//         })
+//     } catch (error) {
+//         res.status(500).json({
+//             msg: "Error interno del servidor"
+//         });
+//         console.log(error);
+//     }
+// };
+

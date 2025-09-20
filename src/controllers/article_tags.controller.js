@@ -1,10 +1,10 @@
-import { ArticleModel } from "../models/article.model";
+import { ArticleModel } from "../models/article.model.js";
 
 export const createArticleTag = async (req,res) => {
-    req.body(article, tag) = req.body;
+    const {articleId , tagId} = req.params;
     try {
-        await ArticleModel.findByIdAndUpdate(article, {
-            $push: {tags: tag}
+        await ArticleModel.findByIdAndUpdate(articleId, {
+            $push: {tags: tagId}
         })
 
         res.status(200).json({
@@ -19,10 +19,10 @@ export const createArticleTag = async (req,res) => {
 };
 
 export const deleteArticleTag = async (req,res) => {
-    req.body(article, tag) = req.body;
+    const {articleId , tagId} = req.params;
     try {
-        await ArticleModel.findByIdAndDelete(article, {
-            $ull: {tags: tag}
+        await ArticleModel.findByIdAndDelete(articleId, {
+            $ull: {tags: tagId}
         })
 
         res.status(200).json({

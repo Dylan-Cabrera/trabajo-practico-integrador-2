@@ -17,7 +17,7 @@ export const getAllTags = async (req,res) => {
 
 export const getTagById = async (req,res) => {
     try {
-        const tag = await TagModel.findById(req.params.id);
+        const tag = await TagModel.findById(req.params.id).populate("article");
 
         res.status(200).json(tag);
 
@@ -67,12 +67,12 @@ export const updateTag = async (req,res) => {
     }
 };
 
-export const deleteUser = async (req,res) => {
+export const deleteTag = async (req,res) => {
     try {
         await TagModel.findByIdAndDelete(req.params.id);
 
         res.status(200).json({
-            msg: "TAg eliminado correctamente"
+            msg: "Tag eliminado correctamente"
         });
     } catch (error) {
         res.status(500).json({
