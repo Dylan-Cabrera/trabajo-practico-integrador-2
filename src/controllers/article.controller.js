@@ -44,10 +44,16 @@ export const getMyArticles = async (req,res) => {
 };
 
 export const createArticle = async (req,res) => {
+    const {title, content, excerpt, tags} = req.body;
     try {
-        const newArticle = await ArticleModel.create(req.body);
+        const newArticle = await ArticleModel.create({
+            title: title,
+            content: content,
+            excerpt: excerpt,
+            author: "68d18a07d85108454f8d5ef2"//req.user.id
+        });
 
-        res.status(200).json({
+        res.status(201).json({
             msg: "Article creado correctamente",
             data: newArticle
         });

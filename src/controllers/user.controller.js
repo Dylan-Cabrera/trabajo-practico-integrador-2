@@ -16,7 +16,7 @@ export const getAllUsers = async (req,res) => {
 
 export const getUserById = async (req,res) => {
     try {
-        const user = await UserModel.findById(req.params.id).populate("article comment");
+        const user = await UserModel.findById(req.params.id).populate([{ path: "article", select: "-_id -author title content excerpt status"}]);
 
         res.status(200).json(user);
 

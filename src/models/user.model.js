@@ -63,7 +63,6 @@ const UserSchema = new Schema({
     versionKey: false
 });
 
-export const UserModel = model("user", UserSchema);
 
 UserSchema.virtual("article", {
     ref: "article",
@@ -76,3 +75,4 @@ UserSchema.virtual("comment", {
     localField: "_id",
     foreignField: "author"
 });
+export const UserModel = model("user", UserSchema);
