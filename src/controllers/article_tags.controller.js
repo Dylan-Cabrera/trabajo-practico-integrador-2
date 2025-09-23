@@ -21,8 +21,8 @@ export const createArticleTag = async (req,res) => {
 export const deleteArticleTag = async (req,res) => {
     const {articleId , tagId} = req.params;
     try {
-        await ArticleModel.findByIdAndDelete(articleId, {
-            $ull: {tags: tagId}
+        await ArticleModel.findByIdAndUpdate(articleId, {
+            $pull: {tags: tagId}
         })
 
         res.status(200).json({

@@ -24,5 +24,6 @@ export const decodeToken = (token) => {
         return jwt.verify(token, process.env.JWT_SECRET)
     } catch (error) {
         console.log(error)
+        console.log("Error en el decode")
     }
 };

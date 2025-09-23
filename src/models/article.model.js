@@ -39,10 +39,14 @@ const articleSchema = new Schema({
     updatedAt: {
         type: Date
     }
+},  {
+    versionKey: false,
+    toJSON: {virtuals: true},
+    toObject: {virtuals: true}
 });
 
 
-articleSchema.virtual("comment", {
+articleSchema.virtual("comments", {
     ref: "comment",
     localField: "_id",
     foreignField: "article"

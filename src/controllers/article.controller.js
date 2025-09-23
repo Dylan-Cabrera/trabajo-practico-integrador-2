@@ -3,7 +3,9 @@ import { ArticleModel } from "../models/article.model.js";
 
 export const getAllArticles = async (req,res) => {
     try {
-        const articles = await ArticleModel.find().populate("user tag");
+        const articles = await ArticleModel.find().populate([
+            {path: "author", select: "-_id username email firstName lastName"},
+            {path: "tags", select: "-_id name"} ]);
 
         res.status(200).json(articles);
 
@@ -17,7 +19,10 @@ export const getAllArticles = async (req,res) => {
 
 export const getArticleById = async (req,res) => {
     try {
-        const article = await ArticleModel.findById(req.params.id).populate("user tag comment");
+        const article = await ArticleModel.findById(req.params.id).populate([
+            {path: "author", select: "-_id username email firstName lastName"},
+            {path: "tags", select: "-_id name"},
+            {path: "comments", select: "-_id -article content"} ]);
 
         res.status(200).json(article);
 
@@ -44,22 +49,22 @@ export const getMyArticles = async (req,res) => {
 };
 
 export const createArticle = async (req,res) => {
-    const {title, content, excerpt, tags} = req.body;
+    const {title, content, excerpt} = req.body;
     try {
         const newArticle = await ArticleModel.create({
             title: title,
             content: content,
             excerpt: excerpt,
-            author: "68d18a07d85108454f8d5ef2"//req.user.id
+            author: req.user.id
         });
 
-        res.status(201).json({
+        return res.status(201).json({
             msg: "Article creado correctamente",
             data: newArticle
         });
 
     } catch (error) {
-        res.status(500).json({
+        return res.status(500).json({
             msg: "Error interno del servidor"
         });
         console.log(error);
@@ -67,10 +72,14 @@ export const createArticle = async (req,res) => {
 };
 
 export const updateArticle= async (req,res) => {
+    const {title, content, excerpt, status} = req.body;
     try {
         const updateArticle = await ArticleModel.findByIdAndUpdate(
             req.params.id,
-            req,body,
+            {title: title,
+            content: content,
+            excerpt: excerpt,
+            status: status},
             {new: true}
         );
 

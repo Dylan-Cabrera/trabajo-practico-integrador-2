@@ -30,8 +30,9 @@ export const getTagById = async (req,res) => {
 };
 
 export const createTag = async (req,res) => {
+    const {name} = req.body
     try {
-        const newTag = await TagModel.create(req.body);
+        const newTag = await TagModel.create({name:name});
 
         res.status(200).json({
             msg: "tag creado correctamente",

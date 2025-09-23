@@ -22,6 +22,9 @@ const commentSchema = new Schema({
     updatedAt: {
         type: Date
     }
-})
+},
+    {
+        versionKey: false
+    })
 
 export const CommentModel = model("comment", commentSchema);

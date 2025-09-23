@@ -18,7 +18,9 @@ export const getAllComments = async (req,res) => {
 
 export const getCommentsAricle = async (req,res) => {
     try {
-        const article = await ArticleModel.findById(req.params.id).populate("comment user");
+        const article = await ArticleModel.findById(req.params.id).populate([
+            {path: "comments", select: "-_id content"},
+            {path: "author", select: "_-id -password"}]);
 
         res.status(200).json(article);
 
@@ -45,8 +47,13 @@ export const getMyComments = async (req,res) => {
 };
 
 export const createComment = async (req,res) => {
+    const {content, article} = req.body;
     try {
-        const newComment = await CommentModel.create(req.body); //modificar
+        const newComment = await CommentModel.create({
+            content: content,
+            article: article,
+            author: req.user.id
+        }); 
 
         res.status(200).json({
             msg: "Comment creado correctamente",

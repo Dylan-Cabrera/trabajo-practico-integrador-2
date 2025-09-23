@@ -1,5 +1,5 @@
-import { ArticleModel } from "../models/article.model"
-import { CommentModel } from "../models/comment.model";
+import { ArticleModel } from "../models/article.model.js"
+import { CommentModel } from "../models/comment.model.js";
 
 
 export const articleAdminOwner = async (req,res,next) => {
@@ -12,7 +12,7 @@ export const articleAdminOwner = async (req,res,next) => {
             })
         };
 
-        if(req.user.id !== article.author && req.user.role !== "admin") {
+        if(req.user.id != article.author && req.user.role !== "admin") {
             return res.status(403).json({
                 msg: "No autorizado para esta accion"
             })

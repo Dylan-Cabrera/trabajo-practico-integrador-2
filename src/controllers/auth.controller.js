@@ -91,21 +91,29 @@ export const getProfile  = async (req,res) => {
     }
 };
 
-// export const updateProfile  = async (req,res) => {
-//     const {profile} = req.body
-//     try {
-//         const user = UserModel.updateOne(
-//             {_id: req.user.id},
-//             {profile: profile});
+ export const updateProfile  = async (req,res) => {
+     const {profile} = req.body
+     try {
+         const user = await UserModel.findOneAndUpdate(
+             {_id: req.user.id},
+             { $set: {
+                "profile.firstName": profile.firstName,
+                "profile.lastName": profile.lastName,
+                "profile.biography": profile.biography,
+                "profile.birthDate": profile.birthDate,
+                "profile.avatarUrl": profile.avatarUrl
+             }},
+                {new: true});
 
-//         res.status(200).json({
-//             msg: "Perfil actualizado con exito"
-//         })
-//     } catch (error) {
-//         res.status(500).json({
-//             msg: "Error interno del servidor"
-//         });
-//         console.log(error);
-//     }
-// };
+         res.status(200).json({
+             msg: "Perfil actualizado con exito",
+             data: user 
+         })
+     } catch (error) {
+         res.status(500).json({
+             msg: "Error interno del servidor"
+         });
+         console.log(error);
+     }
+ };
 

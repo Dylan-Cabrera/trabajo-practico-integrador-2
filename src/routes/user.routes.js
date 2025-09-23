@@ -7,9 +7,8 @@ import { admin } from "../middlewares/admin.js";
 export const userRoutes = Router();
 
 userRoutes.use(auth);
-userRoutes.use(admin)
 
-userRoutes.get('/users', getAllUsers);
-userRoutes.get('/users/:id', getUserById);
-userRoutes.put('/users/:id', updateUser);
-userRoutes.delete('/users/:id', deleteUser);
+userRoutes.get('/users', admin, getAllUsers);
+userRoutes.get('/users/:id', admin, getUserById);
+userRoutes.put('/users/:id', admin,  updateUser);
+userRoutes.delete('/users/:id', admin, deleteUser);
