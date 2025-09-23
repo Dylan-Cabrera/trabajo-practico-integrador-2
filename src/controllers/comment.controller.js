@@ -46,7 +46,7 @@ export const getMyComments = async (req,res) => {
 
 export const createComment = async (req,res) => {
     try {
-        const newComment = await CommentModel.create(req.body);
+        const newComment = await CommentModel.create(req.body); //modificar
 
         res.status(200).json({
             msg: "Comment creado correctamente",
