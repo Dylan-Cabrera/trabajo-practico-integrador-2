@@ -55,6 +55,9 @@ const UserSchema = new Schema({
     },
     updatedAt: {
         type: Date
+    },
+    deletedAt: {
+        type: Date
     }
 },
 {

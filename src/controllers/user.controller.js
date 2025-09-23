@@ -2,7 +2,7 @@ import { UserModel } from "../models/user.model.js";
 
 export const getAllUsers = async (req,res) => {
     try {
-        const users = await UserModel.find().populate("article");
+        const users = await UserModel.find({ deletedAt: {$ne: null}}).populate("article");
 
         res.status(200).json(users);
 
@@ -54,7 +54,9 @@ export const updateUser = async (req,res) => {
 
 export const deleteUser = async (req,res) => {
     try {
-        await UserModel.findByIdAndDelete(req.params.id);
+        await UserModel.findByIdAndUpdate(req.params.id, 
+            {deletedAt: Date.now()}
+        );
 
         res.status(200).json({
             msg: "usuario eliminado correctamente"
