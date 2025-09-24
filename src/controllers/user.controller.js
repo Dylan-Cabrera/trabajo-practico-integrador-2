@@ -35,7 +35,7 @@ export const updateUser = async (req,res) => {
     try {
         const updateUser = await UserModel.findByIdAndUpdate(
             req.params.id,
-            req,body,
+            req.body,
             {new: true}
         );
 
