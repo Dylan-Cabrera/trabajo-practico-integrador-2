@@ -1,3 +1,4 @@
+import { ArticleModel } from "../models/article.model.js";
 import { TagModel } from "../models/tag.model.js";
 
 
@@ -70,7 +71,15 @@ export const updateTag = async (req,res) => {
 
 export const deleteTag = async (req,res) => {
     try {
-        await TagModel.findByIdAndDelete(req.params.id);
+        
+        const tag = await TagModel.findById(req.params.id);
+        
+        await ArticleModel.updateMany({tags: req.params.id}, {
+            $pull: {tags: tag._id}
+        });
+
+        await tag.deleteOne();
+
 
         res.status(200).json({
             msg: "Tag eliminado correctamente"

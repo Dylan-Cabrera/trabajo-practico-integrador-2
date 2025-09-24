@@ -1,4 +1,5 @@
 import { ArticleModel } from "../models/article.model.js";
+import { CommentModel } from "../models/comment.model.js";
 
 
 export const getAllArticles = async (req,res) => {
@@ -98,10 +99,13 @@ export const updateArticle= async (req,res) => {
 
 export const deleteArticle = async (req,res) => {
     try {
+
         await ArticleModel.findByIdAndDelete(req.params.id);
+        
+        await CommentModel.deleteMany({article: req.params.id});
 
         res.status(200).json({
-            msg: "Article eliminado correctamente"
+            msg: "Article eliminado correctamente con sus comentarios"
         });
     } catch (error) {
         res.status(500).json({
