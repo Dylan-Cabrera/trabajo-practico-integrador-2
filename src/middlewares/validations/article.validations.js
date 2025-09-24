@@ -16,11 +16,13 @@ export const createArticleValidations = [
     .isLength(2,200)
     ,
     body("content").notEmpty()
-    .isLength(0,50)
+    .isLength({min: 50
+        
+    })
     ,
     body("excerpt").notEmpty()
     .optional()
-    .isLength(0,500)
+    .isLength({max: 500})
     ,
     body("status").notEmpty()
     .custom( async (value) => {
@@ -38,12 +40,12 @@ export const updateArticleValidations = [
     .optional()
     ,
     body("content").notEmpty()
-    .isLength(0,50)
+    .isLength({min: 50})
     .optional()
     ,
     body("excerpt").notEmpty()
     .optional()
-    .isLength(0,500)
+    .isLength({max: 500})
     ,
     body("status").notEmpty()
     .custom( async (value) => {
@@ -56,11 +58,12 @@ export const updateArticleValidations = [
 ]
 
 export const deleteArticleValidations = [
-     param("id").custom( async (value) => {
-            const article = await ArticleModel.findById(value)
-            if(!article) {
-                throw new Error("Article no encontrado")
-            }
-        })
-        .isMongoId().withMessage("Id invalido")
+    param("id")
+    .isMongoId().withMessage("Id invalido")
+    .custom( async (value) => {
+           const article = await ArticleModel.findById(value)
+           if(!article) {
+               throw new Error("Article no encontrado")
+           }
+       })
 ]
