@@ -16,9 +16,9 @@ export const getAllComments = async (req,res) => {
     }
 };
 
-export const getCommentsAricle = async (req,res) => {
+export const getCommentsArticle = async (req,res) => {
     try {
-        const article = await ArticleModel.findById(req.params.id).populate([
+        const article = await ArticleModel.findById(req.params.articleID).populate([
             {path: "comments", select: "-_id content"},
             {path: "author", select: "_-id -password"}]);
 
